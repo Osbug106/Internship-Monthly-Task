@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {{!--
+    <link rel="stylesheet" href="css/style.css"> --}}
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 500px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: auto;
+            padding-top: 20px;
+        }
+
+        .sidenav2 {
+            height: 5%;
+            width: 300px;
+            position: fixed;
+            z-index: 0;
+            top: 0;
+            right: 10px;
+            margin-top: 20px;
+            background-color: #111;
+            border-radius: 12px;
+        }
+
+        .sidenav a,
+        .sidenav2 a,
+        .dropdown-btn {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sidenav a:hover,
+        .sidenav2 a:hover,
+        .dropdown-btn:hover {
+            color: #f1f1f1;
+        }
+
+        .main {
+            margin-left: 200px;
+            /* Same as the width of the sidenav */
+            font-size: 20px;
+            /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
+
+        .active {
+            background-color: darkorange;
+            color: white;
+        }
+
+        .dropdown-container {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+        }
+
+        .dropdown-container2 {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+            overflow-y: scroll;
+            height: 400px;
+        }
+
+        .right-count {
+            float: right;
+            padding-right: 20px;
+        }
+
+        .right-btn {
+            text-align: center;
+            background-color: dodgerblue;
+            color: #111
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="Root" class="sidenav">
+            <div id="L1">
+                <button class="dropdown-btn">Catalog<span class="right-count">Products</span>
+                </button>
+                <div class="dropdown-container">
+                    <div id="L2">
+                        <a class="dropdown-btn" href="#">Link 1<span class="right-count">Products</span></a>
+                        <div class="dropdown-container">
+                            <div id="L3">
+                                <a class="dropdown-btn" href="#">Link 1<span class="right-count">Products</span></a>
+                                <div id="L4" class="dropdown-container">
+                                    <a href="#">Link 1<span class="right-count">Products</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="sidenav2">
+            <button class="dropdown-btn" style="text-align: center;">Users
+            </button>
+            <div class="dropdown-container2">
+                {{#each user}}
+                <a href="#" onclick="showCatalog({{tostring this._id}})">{{this.business_name}}</a>
+                {{/each}}
+            </div>
+        </div>
+        {{!-- onclick="showCatalog({{tostring this._id}})" --}}
+
+    </div>
+    <script>
+        function dropDown() {
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
+
+            for (i = 0; i < dropdown.length; i++) {
+                dropdown[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                    } else {
+                        dropdownContent.style.display = "block";
+                    }
+                });
+            }
+        }
+        dropDown();
+        function showCatalog(Uid) {
+            document.getElementById("Root").innerHTML = " ";
+            fetch("http://localhost:8080/business/?id=" + Uid)
+                .then((res) => {
+                    console.log(res);
+                    if (res.ok) {
+                        res.json().then(val => {
+                            val.catalogs.forEach((cat) => {
+                                var lev = cat.categoryLink.split("/");
+                                if (lev.length == 1) {
+                                    appentLevel1(cat);
+                                }
+                            });
+                            val.catalogs.forEach((cat) => {
+                                var lev = cat.categoryLink.split("/");
+                                if (lev.length == 2) {
+                                    appentLevel2(lev[0], cat);
+                                }
+                            });
+                            val.catalogs.forEach((cat) => {
+                                var lev = cat.categoryLink.split("/");
+                                if (lev.length == 3) {
+                                    appentLevel3(lev[1], cat);
+                                }
+                            });
+                            val.catalogs.forEach((cat) => {
+                                var lev = cat.categoryLink.split("/");
+                                if (lev.length == 4) {
+                                    appentLevel4(lev[2], cat);
+                                }
+                            });
+                            dropDown();
+                        });
+                    }
+                })
+        }
+
+        function appentLevel1(obj) {
+            var node = document.getElementById("Root");
+            node.innerHTML += ` <div id="L1">
+            <button class="dropdown-btn">${obj.catalogCategory}<span class="right-count">${obj.products}</span>
+            </button>
+            <div class="dropdown-container">
+                <div id="${obj.slug}">
+                </div>
+            </div>
+        </div>`
+            dropDown();
+        }
+        function appentLevel2(pid, obj) {
+            var node = document.getElementById(pid);
+            node.innerHTML += `<a class="dropdown-btn" href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>
+                    <div class="dropdown-container">
+                        <div id="${obj.slug}">
+                            <a class="dropdown-btn" href="#"><span class="right-count"></span></a>
+                            <div id="L4" class="dropdown-container">
+                                <a href="#"><span class="right-count"></span></a>
+                            </div>
+                        </div>
+                    </div>`
+            dropDown();
+        }
+        function appentLevel3(pid, obj) {
+            var node = document.getElementById(pid);
+            node.innerHTML += `<a class="dropdown-btn" href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>
+                            <div id="${obj.slug}" class="dropdown-container">
+                                <a href="#"><span class="right-count"></span></a>
+                            </div>`
+            dropDown();
+        }
+        function appentLevel4(pid, obj) {
+            var node = document.getElementById(pid);
+            node.innerHTML += `<a href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>`
+            dropDown();
+        }
+
+    </script>
+</body>
+
+</html>

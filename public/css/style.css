@@ -1,0 +1,83 @@
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: auto;
+    padding-top: 20px;
+}
+
+.sidenav2 {
+    height: 5%;
+    width: 150px;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    right: 10px;
+    margin-top: 20px;
+    background-color: #111;
+    border-radius: 12px;
+}
+
+.sidenav a,
+.sidenav2 a,
+.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.sidenav a:hover,
+.sidenav2 a:hover,
+.dropdown-btn:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 200px;
+    /* Same as the width of the sidenav */
+    font-size: 20px;
+    /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+.active {
+    background-color: darkorange;
+    color: white;
+}
+
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+.dropdown-container2 {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+    overflow-y: scroll;
+    height: 400px;
+}
+
+.right-count {
+    float: right;
+    padding-right: 8px;
+}
+
+.right-btn {
+    text-align: center;
+    background-color: dodgerblue;
+    color: #111
+}
