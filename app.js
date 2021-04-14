@@ -46,7 +46,6 @@ app.get("/business", async(req, res) => {
     });
 
     res.send({
-        user,
         catalogs,
     });
 });
