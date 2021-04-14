@@ -191,7 +191,6 @@
                 </div>
             </div>
         </div>`
-            dropDown();
         }
         function appentLevel2(pid, obj) {
             var node = document.getElementById(pid);
@@ -204,7 +203,6 @@
                             </div>
                         </div>
                     </div>`
-            dropDown();
         }
         function appentLevel3(pid, obj) {
             var node = document.getElementById(pid);
@@ -212,14 +210,11 @@
                             <div id="${obj.slug}" class="dropdown-container">
                                 <a href="#"><span class="right-count"></span></a>
                             </div>`
-            dropDown();
         }
         function appentLevel4(pid, obj) {
             var node = document.getElementById(pid);
             node.innerHTML += `<a href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>`
-            dropDown();
         }
-
     </script>
 </body>
 
