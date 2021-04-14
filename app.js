@@ -22,25 +22,10 @@ hbs.registerHelper("tostring", function(value) {
 });
 
 app.get("/", async(req, res) => {
-    // var user = await Users.aggregate([{
-    //     $lookup: {
-    //         from: "Catalogs",
-    //         localField: "_id",
-    //         foreignField: "userId",
-    //         as: "users",
-    //     },
-    // }, {
-    //     $project: {
-    //         _id: 1,
-    //         business_name: 1,
-    //     },
-    // }, ]);
-
     var user = await Users.find({}, {
         _id: 1,
         business_name: 1,
     });
-    // console.log(`User: ${user}`);
     res.render("index", {
         user,
     });
@@ -51,7 +36,6 @@ app.get("/business", async(req, res) => {
 
     var catalogs = await Catalogs.find({
             userId: Id,
-            // parent: undefined,
         })
         .lean()
         .select("_id slug type catalogCategory products categoryLink")
@@ -60,8 +44,6 @@ app.get("/business", async(req, res) => {
         _id: 1,
         business_name: 1,
     });
-
-    // console.log(`Parent: ${catalogs[0].parent}`);
 
     res.send({
         user,
