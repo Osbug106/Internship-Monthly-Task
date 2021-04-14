@@ -36,7 +36,7 @@
         .sidenav a,
         .sidenav2 a,
         .dropdown-btn {
-            padding: 6px 8px 6px 16px;
+            padding: 6px 2px 6px 16px;
             text-decoration: none;
             font-size: 20px;
             color: #818181;
@@ -85,6 +85,10 @@
             padding-right: 20px;
         }
 
+        .right-count2 {
+            float: right;
+        }
+
         .right-btn {
             text-align: center;
             background-color: dodgerblue;
@@ -97,16 +101,16 @@
     <div>
         <div id="Root" class="sidenav">
             <div id="L1">
-                <button class="dropdown-btn">Catalog<span class="right-count">Products</span>
+                <button class="dropdown-btn">Catalog<span class="right-count">Count</span>
                 </button>
                 <div class="dropdown-container">
                     <div id="L2">
-                        <a class="dropdown-btn" href="#">Link 1<span class="right-count">Products</span></a>
+                        <a class="dropdown-btn" href="#">Level 1<span class="right-count">Products</span></a>
                         <div class="dropdown-container">
                             <div id="L3">
-                                <a class="dropdown-btn" href="#">Link 1<span class="right-count">Products</span></a>
+                                <a class="dropdown-btn" href="#">Level 1<span class="right-count">Products</span></a>
                                 <div id="L4" class="dropdown-container">
-                                    <a href="#">Link 1<span class="right-count">Products</span></a>
+                                    <a href="#">Level 1<span class="right-count">Products</span></a>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +188,7 @@
         function appentLevel1(obj) {
             var node = document.getElementById("Root");
             node.innerHTML += ` <div id="L1">
-            <button class="dropdown-btn">${obj.catalogCategory}<span class="right-count">${obj.products}</span>
+            <button class="dropdown-btn">${obj.catalogCategory}<span class="right-count2">${obj.products}</span>
             </button>
             <div class="dropdown-container">
                 <div id="${obj.slug}">
