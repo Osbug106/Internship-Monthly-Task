@@ -197,10 +197,6 @@
             node.innerHTML += `<a class="dropdown-btn" href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>
                     <div class="dropdown-container">
                         <div id="${obj.slug}">
-                            <a class="dropdown-btn" href="#"><span class="right-count"></span></a>
-                            <div id="L4" class="dropdown-container">
-                                <a href="#"><span class="right-count"></span></a>
-                            </div>
                         </div>
                     </div>`
         }
@@ -208,7 +204,6 @@
             var node = document.getElementById(pid);
             node.innerHTML += `<a class="dropdown-btn" href="#">${obj.catalogCategory}<span class="right-count">${obj.products}</span></a>
                             <div id="${obj.slug}" class="dropdown-container">
-                                <a href="#"><span class="right-count"></span></a>
                             </div>`
         }
         function appentLevel4(pid, obj) {
